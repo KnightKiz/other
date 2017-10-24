@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>after 2 weeks</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, maximum-scale=1.0">
+	<style type="text/css">
+		body, html{
+			padding: 0;
+			margin: 0;
+			height: 100%;
+			width: 100%;
+			-webkit-perspective: 1500;
+		}
+		.wrapper{
+			position: relative;
+			height: 100%;
+			width: 100%;
+			font-size: 30px;
+			transform-style: preserve-3d;
+			transition: all 2s linear;
+		}
+		.page{
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			box-sizing: border-box;
+			padding: 50px;
+			vertical-align: top;
+		}
+		.font{
+			z-index: 2;
+			background-color: #a0f;
+			color: #fff;
+		}
+		.back{
+			z-index: 1;
+			transform: rotateY(180deg);
+			background-color: #fa0;
+		}
+		.font-content, .back-content{
+			box-sizing: border-box;
+			padding: 20px;
+			transition: all 1s;
+		}
+		.click-area{
+			position: absolute;
+			height: 100%;
+			width: 50%;
+		}
+		.left{
+			z-index: 3;
+			top: 0;
+			left: 0;
+		}
+		.right{
+			z-index: 3;
+			right: 0;
+			top: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="left click-area"></div>
+	<div class="right click-area"></div>
+	<div class="wrapper">
+		<div class="back page"><div class="back-content"></div></div>
+		<div class="font page"><div class="font-content"></div></div>
+	</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+	var str = ['其实，', '做这个东西也不知道在写些什么，', '想要肉麻一下吧，', '又觉得麻不起来，', '这两天发烧，', '有你的关心，', '好的特别快，','你什么时候有病，','啊，呸，我家du身体好着呢，才不会生病，','我是说，','你啥时候需要我，','我都会在你身边，嘻嘻','哎呀不知道要说啥,','反正你就要好好的啦，','当然我要会好好的，','不然怎么照顾你呢。'];
+	var i = 0;
+	var timer = setInterval(function() {
+		$('.font-content').text(str[0].substring(0, i));
+		i++;
+		if (i > str[0].length) {
+			clearInterval(timer);
+		}
+	}, 200);
+	// 表示当前旋转的度数
+	var deg = 0;
+	// 转动的次数
+	var index = 0;
+	$(document).ready(function(){
+		$('.left').click(function(){
+			if (deg > 0) {
+				index--;
+				deg -= 180;
+				if (deg % 360 === 0){
+					$('.font-content').text('');
+					var i = 0;
+					$('.wrapper').css('transform', 'rotateY('+ deg +'deg)');
+					$('.wrapper').bind("webkitTransitionEnd", function() {
+						var timer = setInterval(function() {
+							$('.font-content').text(str[index].substring(0, i));
+							i++;
+							if (i > str[index].length) {
+								clearInterval(timer);
+							}
+						}, 200);
+					});
+				}else {
+					$('.back-content').text('');
+					var i = 0;
+					$('.wrapper').css('transform', 'rotateY('+ deg +'deg)');
+					$('.wrapper').bind("webkitTransitionEnd", function() {
+						var timer = setInterval(function() {
+							$('.back-content').text(str[index].substring(0, i));
+							i++;
+							if (i > str[index].length) {
+								clearInterval(timer);
+							}
+						}, 200);
+					});
+				}
+			}
+		});
+		$('.right').click(function(){
+			if (index < str.length){
+				index++;
+				deg += 180;
+				if (deg % 360 === 0){
+					var i = 0;
+					$('.font-content').text('');
+					$('.wrapper').css('transform', 'rotateY('+ deg +'deg)');
+					$('.wrapper').bind("webkitTransitionEnd", function() {
+						var timer = setInterval(function() {
+							$('.font-content').text(str[index].substring(0, i));
+							i++;
+							if (i > str[index].length) {
+								clearInterval(timer);
+							}
+						}, 200);
+					});
+				}else {
+					var i = 0;
+					$('.back-content').text('');
+					$('.wrapper').css('transform', 'rotateY('+ deg +'deg)');
+					$('.wrapper').bind("webkitTransitionEnd", function() {
+						var timer = setInterval(function() {
+							$('.back-content').text(str[index].substring(0, i));
+							i++;
+							if (i > str[index].length) {
+								clearInterval(timer);
+							}
+						}, 200);
+					});
+				}
+			}
+		});
+	});
+</script>
+</body>
+</html>
